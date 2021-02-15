@@ -76,6 +76,7 @@ var
   PascalFiles: TStringList;
   LazarusDirectory: string;
 begin
+  //comment
   PascalFiles := TStringList.Create;
       if SelectDirectoryDialog1.Execute then
      begin

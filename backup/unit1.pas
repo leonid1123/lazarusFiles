@@ -72,6 +72,7 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
+var
   PascalFiles: TStringList;
   LazarusDirectory: string;
 begin
