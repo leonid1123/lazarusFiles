@@ -14,6 +14,7 @@ type
   TForm1 = class(TForm)
     Button1: TButton;
     Button2: TButton;
+    Label1: TLabel;
     ListBox1: TListBox;
     OpenDialog1: TOpenDialog;
     SelectDirectoryDialog1: TSelectDirectoryDialog;
@@ -76,7 +77,7 @@ var
   PascalFiles: TStringList;
   LazarusDirectory: string;
   i:integer;
-
+  ShortFileName:string;
   FS: TFileStream;
 begin
   listbox1.Clear;
@@ -88,8 +89,11 @@ begin
           ShowMessage(Format('Found %d files', [PascalFiles.Count]));
 
           for i:=0 to PascalFiles.Count-1 do
-              FS:= TFileStream.Create(PascalFiles[i], fmOpenRead);
-              Listbox1.Items.Add(PascalFiles[i] +' '+ floattostr(FS.Size));
+              begin
+                   FS:= TFileStream.Create(PascalFiles[i], fmOpenRead);
+                   ShortFileName:=ExtractFileName(PascalFiles[i]);
+                   Listbox1.Items.Add(ShortFileName +' '+ floattostr(FS.Size));
+              end;
 
 
           PascalFiles.Free;
