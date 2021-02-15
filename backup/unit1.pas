@@ -34,7 +34,7 @@ implementation
 
 { TForm1 }
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.Button1Click(Sender: TObject);  //выбор 1го файла
 var
   FS: TFileStream;
   Filename:string;
@@ -42,7 +42,7 @@ var
   edIzm:string;
 
 begin
-
+   listbox1.Clear;
 
   if OpenDialog1.Execute then
      begin
@@ -71,18 +71,27 @@ begin
   listbox1.Items.Add(FS.FileName + ' ' + FormatFloat('######.0',Result)+' '+edIzm);
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.Button2Click(Sender: TObject);  //выбор каталога
 var
   PascalFiles: TStringList;
   LazarusDirectory: string;
+  i:integer;
+
+  FS: TFileStream;
 begin
-  //comment
+  listbox1.Clear;
   PascalFiles := TStringList.Create;
       if SelectDirectoryDialog1.Execute then
      begin
           LazarusDirectory:=SelectDirectoryDialog1.FileName;
           FindAllFiles(PascalFiles, LazarusDirectory, '*.*', false);
           ShowMessage(Format('Found %d files', [PascalFiles.Count]));
+
+          for i:=0 to PascalFiles.Count-1 do
+              FS:= TFileStream.Create(PascalFiles[i], fmOpenRead);
+              Listbox1.Items.Add(PascalFiles[i] +' '+ floattostr(FS.Size));
+
+
           PascalFiles.Free;
      end;
 end;
